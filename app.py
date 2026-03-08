@@ -15,7 +15,7 @@ if "da_vao_trong" not in st.session_state:
     
     # NÚT 1: NHẢY SANG BẢN VIP 
     # (SẾP NHỚ THAY LINK XỊN CỦA SẾP VÀO TRONG DẤU NGOẶC KÉP NHÉ) 👇
-    link_vip = "https://thay-bang-link-app-xin-cua-sep.streamlit.app"
+    link_vip = "https://tr--l--kienentti-cuskf7zorbhvrrcw6gkpkb.streamlit.app/"
     st.link_button("🚀 MÁY XỊN (Android 7+ hoặc iOS 16.4+)", link_vip, use_container_width=True)
     
     st.markdown("---")
@@ -111,3 +111,4 @@ if user_input or file_anh:
             st.markdown(res.text)
             st.session_state.messages.append({"role": "assistant", "content": res.text})
         except Exception as e: st.error(f"❌ Lỗi: {str(e)}")
+
