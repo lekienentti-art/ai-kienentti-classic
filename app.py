@@ -13,7 +13,8 @@ if "da_vao_trong" not in st.session_state:
     st.title("🚪 CỔNG VÀO AI - KIENENTTI")
     st.info("📱 Điện thoại của bạn thuộc hệ nào?")
     
-    # NÚT 1: NHẢY SANG BẢN VIP (Sếp dán link web xịn của sếp vào đây nhé)
+    # NÚT 1: NHẢY SANG BẢN VIP 
+    # (SẾP NHỚ THAY LINK XỊN CỦA SẾP VÀO TRONG DẤU NGOẶC KÉP NHÉ) 👇
     link_vip = "https://thay-bang-link-app-xin-cua-sep.streamlit.app"
     st.link_button("🚀 MÁY XỊN (Android 7+ hoặc iOS 16.4+)", link_vip, use_container_width=True)
     
@@ -29,28 +30,33 @@ if "da_vao_trong" not in st.session_state:
 # 🛡️ BÊN TRONG BẢN CLASSIC (CHO MÁY YẾU)
 # ==========================================
 now = int(time.time())
-auth_code = st.query_params.get("auth")
-auth_time = st.query_params.get("ts")
+
+# ĐÃ SỬA LỖI: Dùng lệnh lấy mật khẩu của bản cũ (experimental)
+params = st.experimental_get_query_params()
+auth_code = params.get("auth", [None])[0]
+auth_time = params.get("ts", [None])[0]
 
 is_logged_in = False
 if auth_code == "kienentti123" and auth_time:
-    if now - int(auth_time) < 86400: is_logged_in = True
-    else: st.query_params.clear() 
+    if now - int(auth_time) < 86400: 
+        is_logged_in = True
+    else: 
+        st.experimental_set_query_params() 
 
 if not is_logged_in:
     st.title("🛡️ CỔNG BẢO MẬT (BẢN CLASSIC)")
     mk = st.text_input("🔑 Nhập mật khẩu sếp cấp:", type="password")
     if mk == "kienentti123":
-        st.query_params["auth"] = "kienentti123"
-        st.query_params["ts"] = str(now)
+        st.experimental_set_query_params(auth="kienentti123", ts=str(now))
         st.rerun()
     elif mk: st.error("❌ Sai mật khẩu!")
     st.stop()
 
 # --- SẢNH CHỜ CLASSIC ---
-try: all_keys = st.secrets["DANH_SACH_KEY"]
+try: 
+    all_keys = st.secrets["DANH_SACH_KEY"]
 except:
-    st.error("⚠️ Sếp chưa nạp Key!")
+    st.error("⚠️ Sếp chưa nạp Key vào mục Secrets của kho Classic rồi!")
     st.stop()
 
 if "ai_persona" not in st.session_state:
